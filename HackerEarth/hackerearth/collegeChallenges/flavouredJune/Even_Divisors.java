@@ -2,6 +2,8 @@ package collegeChallenges.flavouredJune;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Aakansha Doshi
@@ -22,47 +24,44 @@ import java.io.InputStreamReader;
  */
 public class Even_Divisors {
 
-	public static void main(String[] args) throws NumberFormatException, IOException {
-		// TODO Auto-generated method stub
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int T=Integer.parseInt(br.readLine());
-		while(T-->0)
-		{
-			long N=Long.parseLong(br.readLine());			
-			int i=2;
-			int limit=(int) Math.ceil(Math.sqrt(N));
-			//System.out.println(limit);
-			int ans=0;
-			if(N==2)
-				ans=1;
-			else if((N&1)==0)
+		public static void main(String[] args) throws NumberFormatException, IOException {
+			BufferedReader br=new BufferedReader(new InputStreamReader(System.in)); 
+			
+			int T=Integer.parseInt(br.readLine().trim());
+			
+			while(T-->0)
 			{
-				ans=1;
-				while(i<=limit)
-				{
-					if(N%i==0)
-					{
-						if((i&1)==0)
-						{
-							ans++;
-						}
-						long next=N/i;
-						//System.out.println(i+" " +next);
-						if(i*i!=N&&(next&1)==0)
-						{
-							ans++;
-							//System.out.println(i+" " +next);
-						}
-						
-						
-						
-					}
-					i++;
-				}
-			}			
-			System.out.println(ans);
-		
-		}
-	}
+				long N=Long.parseLong(br.readLine().trim());
+				int ans=get_EverDivisor_Count(N);
+	            System.out.println(ans);
+			}
 
+		}
+
+		private static int get_EverDivisor_Count(long N) {
+	        Set<Long> set=new HashSet<>();
+			long sqrt=(long)Math.ceil((Math.sqrt(N)));
+			long i=2;		
+	        if(N==2)
+	            return 1;
+	        if((N&1)==0)
+	            set.add(N);
+	        
+			while(i<=sqrt)
+			{
+				if(N%i==0)
+				{
+					if((i&1)==0)
+	                    set.add(i);              
+	                long a=N/i;
+	                if(i*i!=N&&(a&1)==0)	
+	                     set.add(a);				
+					//System.out.println(c+" "+i);           
+	              
+						
+				}
+				i++;
+			}
+			return set.size();
+		}
 }
